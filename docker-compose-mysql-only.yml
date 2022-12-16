@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  db:
+    # bash-4.4# mysql -u root -p
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      MYSQL_DATABASE: sakila
+      MYSQL_ROOT_PASSWORD: Spark<3Java
+      MYSQL_USER: user
+      MYSQL_PASSWORD: Spark<3Java
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./data/db:/var/lib/mysql
+      - ./data/init:/docker-entrypoint-initdb.d
+
+    networks:
+      pnet:
+        ipv4_address: 172.21.0.6
+
+
+networks:
+  pnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+
+#volumes:
+#  db:
+#    driver: local
+#  data:
+#    driver: local
